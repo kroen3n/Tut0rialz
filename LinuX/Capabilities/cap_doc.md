@@ -2,7 +2,7 @@
 # Linux capabilities & D0cker containers
 
 ```
- For the purpose of performing permission checks, traditional UNIX
+       For the purpose of performing permission checks, traditional UNIX
        implementations distinguish two categories of processes: privileged
        processes (whose effective user ID is 0, referred to as superuser or
        root), and unprivileged processes (whose effective UID is nonzero).
