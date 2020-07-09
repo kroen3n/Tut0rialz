@@ -14,3 +14,6 @@ https://man7.org/linux/man-pages/man1/capsh.1.html
 
 [/proc filesystem ]
 https://man7.org/linux/man-pages/man5/proc.5.html
+
+[Golang tutorial]
+https://tour.golang.org/welcome/1
