@@ -299,7 +299,7 @@ Take a look at ...
 
 ... and /proc filesystem documentation:  https://man7.org/linux/man-pages/man5/proc.5.html [2] 
 
-You might want to check the <i> capability.h </i> file, located on your linux host:
+You might want to check the <i> capability.h </i> file, from your linux host:
 
 
 ```
