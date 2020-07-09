@@ -142,10 +142,10 @@ func main(){
 Run the program with the name of the file and the chosen name,  as arguments:
 
 ```
-hue@kroen3n:~$  go run rename_me.go hiya.txt hiya.py
+hue@kroen3n:~$  go run rename_me.go hiya.txt hielau.txt
 hue@kroen3n:~$  
-hue@kroen3n:~$  ls -ltr *.py
--rw-r--r-- 1 root root 0 Jul  9 13:31 hiya.py
+hue@kroen3n:~$  ls -ltr hielau.*
+-rw-r--r-- 1 root root 0 Jul  9 13:31 hielau.txt
 hue@kroen3n:~$  
 hue@kroen3n:~$ 
 ```
@@ -155,8 +155,8 @@ This worked.
 Back to my (now renamed) file:
 
 ```
-hue@kroen3n:~$  ls -ltr *.py
--rw-r--r-- 1 root root 0 Jul  9 13:31 hiya.py
+hue@kroen3n:~$  ls -ltr hielau.*
+-rw-r--r-- 1 root root 0 Jul  9 13:31 hielau.txt
 ```
 
 As you can well notice, I am trying to write into a file that is owned by root user/root group ... while I am merely a non-root user:
@@ -174,6 +174,133 @@ Since this is an ownage related challenge, my documentation mentions following:
        CAP_CHOWN
               Make arbitrary changes to file UIDs and GIDs (see chown(2)).
 ```
+
+
+
+<i><b> Can't I just apply chown? </b></i>
+
+Of course you can ... but as long as it's not sudo-ed!
+
+```
+hue@kroen3n:~$  chown hue:hue hielau.txt
+chown: changing ownership of 'hielau.txt': Operation not permitted
+hue@kroen3n:~$  
+``` 
+
+So, what's next? 
+
+Locate chown:
+
+```
+hue@kroen3n:~$ whereis chown
+chown: /bin/chown
+hue@kroen3n:~$
+```
+Copy it into hue's home folder <i> (pay attention from here on! this is just as an example for capabilities!! 
+Do not copy around tools/utilities that are not meant to be run by non-root users!!!) </i>
+
+```
+hue@kroen3n:~$ cp /bin/chown .
+hue@kroen3n:~$ ls -ltr chown
+-rwxr-xr-x 1 hue  hue  72512 Jul  9 14:20 chown
+```
+Let's check where are my CAP tools - <i> getcap</i> - that will provide the capabilities that are already set-up, 
+and <i> setcap </i> - that will (obviously) set-up the capabilities I require.
+```
+hue@kroen3n:~$ whereis getcap
+getcap: /sbin/getcap
+hue@kroen3n:~$ 
+hue@kroen3n:~$ whereis setcap
+setcap: /sbin/setcap
+hue@kroen3n:~$ 
+```
+Let's see how to use them:
+
+```
+hue@kroen3n:~$  
+hue@kroen3n:~$  /sbin/getcap /home/hue/chown
+hue@kroen3n:~$ 
+```
+
+As expected, nothing to see there ...
+
+Let's apply the ownage change we need with setcap:
+
+```
+hue@kroen3n:~$  /sbin/setcap cap_chown+ep chown 
+unable to set CAP_SETFCAP effective capability: Operation not permitted
+hue@kroen3n:~$ 
+```
+
+Ah, 'securiteh' ... 
+
+Just use sudo or (if you had issues with /etc/sudoers file) just go back to root user,  and apply the previous /sbin/setcap line
+
+Once it's done, when you run /sbin/getcap, you should see the following output:
+
+```
+hue@kroen3n:~$ pwd
+/home/hue
+hue@kroen3n:~$
+hue@kroen3n:~$ /sbin/getcap ./chown
+chown = cap_chown+ep
+```
+<i> I ran 'pwd' command just to remind you that this is the chown utility we copied under /home/hue folder. 
+We applied that CAP change only to /home/hue/chown </i>
+
+And let's apply this newly changed chown on our file:
+
+```
+hue@kroen3n:~$ 
+hue@kroen3n:~$ ./chown hue:hue hielau.txt
+hue@kroen3n:~$
+hue@kroen3n:~$ ls -ltr hiya.py 
+-rw-r--r-- 1 hue hue 0 Jul  9 14:41 hielau.txt
+```
+You can see that now the file is owned by non-root user, hue.
+
+Let's try to write something into our file:
+
+```
+hue@kroen3n:~$ go run write_into_file.go hielau.txt 
+hue@kroen3n:~$ more hielau.txt 
+hiya
+hiya again
+hue@kroen3n:~$
+```
+
+Yey! No more permission errors!
+
+And obviously, for the Linux commands fans, let’s append a new line with “echo”:
+
+```
+hue@dd1c0ba95ae3:~$ more hielau.txt 
+hiya
+hiya again
+hue@dd1c0ba95ae3:~$ echo "potato is Vodka" >> hielau.txt 
+hue@dd1c0ba95ae3:~$ more hielau.txt 
+hiya
+hiya again
+potato is Vodka
+hue@dd1c0ba95ae3:~$ 
+```
+
+<i><b> Got more? </b></i>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
