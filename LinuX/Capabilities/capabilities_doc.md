@@ -166,7 +166,9 @@ hue@kroen3n:~$  id
 uid=1000(hue) gid=1000(hue) groups=1000(hue)
 ```
 
-What options do I have? since this is a ownage related challenge, my documentation mentions following:
+What options do I have - from a "capability" point of view? 
+
+Since this is an ownage related challenge, my documentation mentions following:
 
 ```
        CAP_CHOWN
