@@ -325,7 +325,18 @@ The inheritable, permitted and effective sets are explained at [1]
 
 <i> Time to practice </i>
 
-Let's grab a random Linux process (in my case 1824), and see its capabilities:
+Let's grab a random Linux process (in my case 1824), 
+
+```
+root@kroen3n:/home/hue# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+[...]
+root      1824     0  0 16:54 pts/1    00:00:00 bash
+[...]
+```
+
+
+and see its capabilities:
 
 ```
 root@kroen3n:/home/hue# more /proc/1824/status | grep -i cap
