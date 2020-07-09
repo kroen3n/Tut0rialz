@@ -274,23 +274,35 @@ Yey! No more permission errors!
 And obviously, for the Linux commands fans, let’s append a new line with “echo”:
 
 ```
-hue@dd1c0ba95ae3:~$ more hielau.txt 
+hue@kroen3n:~$ more hielau.txt 
 hiya
 hiya again
-hue@dd1c0ba95ae3:~$ echo "potato is Vodka" >> hielau.txt 
-hue@dd1c0ba95ae3:~$ more hielau.txt 
+hue@kroen3n:~$ echo "potato is Vodka" >> hielau.txt 
+hue@kroen3n:~$  more hielau.txt 
 hiya
 hiya again
 potato is Vodka
-hue@dd1c0ba95ae3:~$ 
+hue@kroen3n:~$  
 ```
 
 <i><b> Got more? </b></i>
 
 
+You want more, eh?
+
+Take a look at ...
+following code: https://man7.org/tlpi/code/online/dist/cap/cap_text.c.html 
+
+... and /proc documentation: https://man7.org/linux/man-pages/man5/proc.5.html 
+
+You might want to check the capability.h file, located on your linux host:
 
 
-
+```
+root@dd1c0ba95ae3:/home/hue# find / -name capability.h
+/usr/include/linux/capability.h
+root@dd1c0ba95ae3:/home/hue# 
+```
 
 
 
