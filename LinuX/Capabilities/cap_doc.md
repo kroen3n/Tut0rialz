@@ -18,15 +18,16 @@
 ```
 
 <i> Source: https://man7.org/linux/man-pages/man7/capabilities.7.html ... 
-  I expect you take a look at it before diving into this tutorial... </i>
-  
-<i>Also: </i>
 
-<i> https://man7.org/linux/man-pages/man8/setcap.8.html </i>
+  I expect of you to take a look at it before diving into this tutorial... </i>
   
-<i> https://man7.org/linux/man-pages/man8/getcap.8.html </i>
+<i>Don't skip: </i>
 
-<i> https://man7.org/linux/man-pages/man1/capsh.1.html </i>
+<i> https://man7.org/linux/man-pages/man8/setcap.8.html   </i>
+  
+<i> https://man7.org/linux/man-pages/man8/getcap.8.html   </i>
+
+<i> https://man7.org/linux/man-pages/man1/capsh.1.html    </i>
 
 
 
@@ -196,8 +197,9 @@ hue@kroen3n:~$ whereis chown
 chown: /bin/chown
 hue@kroen3n:~$
 ```
-Copy it into hue's home folder <i> (pay attention from here on! this is just as an example for capabilities!! 
-Do not copy around tools/utilities that are not meant to be run by non-root users!!!) </i>
+Copy /bin/chown into hue's home folder, /home/hue <i> 
+(pay attention from here on! this is just as an example for capabilities!! 
+!!! Do not copy around tools/utilities that are not meant to be run by non-root users!!!) </i>
 
 ```
 hue@kroen3n:~$ cp /bin/chown .
@@ -222,7 +224,7 @@ hue@kroen3n:~$  /sbin/getcap /home/hue/chown
 hue@kroen3n:~$ 
 ```
 
-As expected, nothing to see there ...
+As expected, no output ...
 
 Let's apply the ownage change we need with setcap:
 
@@ -234,9 +236,10 @@ hue@kroen3n:~$
 
 Ah, 'securiteh' ... 
 
-Just use sudo or (if you had issues with /etc/sudoers file) just go back to root user,  and apply the previous /sbin/setcap line
+As a work around, ust use sudo or (if you had issues with /etc/sudoers file) just go back to root user,  
+and apply the previous /sbin/setcap line.
 
-Once it's done, when you run /sbin/getcap, you should see the following output:
+Once applied, when you run /sbin/getcap, you should see the following output:
 
 ```
 hue@kroen3n:~$ pwd
@@ -246,7 +249,7 @@ hue@kroen3n:~$ /sbin/getcap ./chown
 chown = cap_chown+ep
 ```
 <i> I ran 'pwd' command just to remind you that this is the chown utility we copied under /home/hue folder. 
-We applied that CAP_CHOWN change only to /home/hue/chown </i>
+We applied that CAP_CHOWN change only to /home/hue/chown utility </i>
 
 And let's apply this newly changed chown on our file:
 
@@ -271,7 +274,7 @@ hue@kroen3n:~$
 
 Yey! No more permission errors!
 
-And obviously, for the Linux commands fans, let’s append a new line with “echo”:
+And obviously, for the Linux commands fans, append a new line with “echo”:
 
 ```
 hue@kroen3n:~$ more hielau.txt 
@@ -292,11 +295,11 @@ You want more, eh?
 
 Take a look at ...
 <br>
-... following code: https://man7.org/tlpi/code/online/dist/cap/cap_text.c.html 
+... following code:   https://man7.org/tlpi/code/online/dist/cap/cap_text.c.html  [1]
 
-... and /proc filesystem documentation: https://man7.org/linux/man-pages/man5/proc.5.html 
+... and /proc filesystem documentation:  https://man7.org/linux/man-pages/man5/proc.5.html [2] 
 
-You might want to check the capability.h file, located on your linux host:
+You might want to check the <i> capability.h </i> file, located on your linux host:
 
 
 ```
@@ -305,7 +308,8 @@ root@kroen3n:/home/hue# find / -name capability.h
 root@kroen3n:/home/hue# 
 ```
 
-From /proc filesystem documentation, following section is in your interest (for now) 
+From /proc filesystem documentation, following section will interest you (for now):
+
 ```
  /proc/[pid]/status 
  [...]
@@ -317,11 +321,11 @@ From /proc filesystem documentation, following section is in your interest (for 
 		
  [...]
 ````
-The inheritable, permitted and effective sets are explained in the link code, as well.
+The inheritable, permitted and effective sets are explained at [1]
 
 <i> Time to practice </i>
 
-Let's grab a random Linux process (in my case 1824), and see what capabilities it has:
+Let's grab a random Linux process (in my case 1824), and see its capabilities:
 
 ```
 root@kroen3n:/home/hue# more /proc/1824/status | grep -i cap
@@ -332,7 +336,7 @@ CapBnd:	00000000a80c25fb
 CapAmb:	0000000000000000
 ```
 
-Remember, there is a tool we haven't used it, capsh (althoug, documentation link was provided) 
+Remember, there is a tool we haven't used it yet, capsh (although, the documentation link was provided) 
 
 <br>
 
