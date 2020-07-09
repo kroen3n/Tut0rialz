@@ -332,13 +332,16 @@ CapBnd:	00000000a80c25fb
 CapAmb:	0000000000000000
 ```
 
-Remember, there is a tool we haven't used it (althoug, documentation link was provided) ... capsh. 
+Remember, there is a tool we haven't used it, capsh (althoug, documentation link was provided) 
+
+<br>
+
 Let's locate it:
 ```
 root@kroen3n:/home/hue# whereis capsh
 capsh: /sbin/capsh
 ```
-Let's use it to decode the capabilities:
+... and use it to decode the capabilities:
 
 ```
 root@kroen3n:/home/hue# /sbin/capsh --decode=00000000a80c25fb
