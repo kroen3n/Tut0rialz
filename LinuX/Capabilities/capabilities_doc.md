@@ -201,7 +201,7 @@ Do not copy around tools/utilities that are not meant to be run by non-root user
 
 ```
 hue@kroen3n:~$ cp /bin/chown .
-hue@kroen3n:~$ ls -ltr chown
+hue@kroen3n:~$ ls -ltr /home/hue/chown
 -rwxr-xr-x 1 hue  hue  72512 Jul  9 14:20 chown
 ```
 Let's check where are my CAP tools - <i> getcap</i> - that will provide the capabilities that are already set-up, 
