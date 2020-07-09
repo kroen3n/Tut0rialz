@@ -11,3 +11,6 @@ https://man7.org/linux/man-pages/man8/getcap.8.html
 
 [Capsh]
 https://man7.org/linux/man-pages/man1/capsh.1.html
+
+[/proc filesyste]
+https://man7.org/linux/man-pages/man5/proc.5.html
