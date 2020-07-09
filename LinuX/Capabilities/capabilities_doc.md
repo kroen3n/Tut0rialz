@@ -291,17 +291,17 @@ hue@kroen3n:~$
 You want more, eh?
 
 Take a look at ...
-following code: https://man7.org/tlpi/code/online/dist/cap/cap_text.c.html 
+... following code: https://man7.org/tlpi/code/online/dist/cap/cap_text.c.html 
 
-... and /proc documentation: https://man7.org/linux/man-pages/man5/proc.5.html 
+... and /proc filesystem documentation: https://man7.org/linux/man-pages/man5/proc.5.html 
 
 You might want to check the capability.h file, located on your linux host:
 
 
 ```
-root@dd1c0ba95ae3:/home/hue# find / -name capability.h
+root@kroen3n:/home/hue# find / -name capability.h
 /usr/include/linux/capability.h
-root@dd1c0ba95ae3:/home/hue# 
+root@kroen3n:/home/hue# 
 ```
 
 
