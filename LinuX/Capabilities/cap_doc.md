@@ -75,7 +75,7 @@ hue@kroen3n:~$ ls -ltr hiya*
 ```
 
 Suppose I want to write into that file. 
-I will be using following Golang program - this program will add and append a couple of lines:
+I will be using following Golang program - this program <a href="https://raw.githubusercontent.com/kroen3n/Tut0rialz/master/LinuX/Capabilities/write_into_file.go"> write_into_file.go </a> will add and append a couple of lines:
 
 ```
 package main
@@ -118,7 +118,7 @@ exit status 1
 
 Hmm... 
 
-Let's try to rename the file ... We could use "mv" command, but should we now? Let's practice more Golang:
+Let's try to rename the file ... We could use "mv" command, but should we now? Let's practice more Golang, with program <a href="https://raw.githubusercontent.com/kroen3n/Tut0rialz/master/LinuX/Capabilities/rename_me.go">rename_me.go</a>:
 
 ```
 package main
