@@ -246,7 +246,7 @@ hue@kroen3n:~$ /sbin/getcap ./chown
 chown = cap_chown+ep
 ```
 <i> I ran 'pwd' command just to remind you that this is the chown utility we copied under /home/hue folder. 
-We applied that CAP change only to /home/hue/chown </i>
+We applied that CAP_CHOWN change only to /home/hue/chown </i>
 
 And let's apply this newly changed chown on our file:
 
@@ -303,6 +303,53 @@ root@kroen3n:/home/hue# find / -name capability.h
 /usr/include/linux/capability.h
 root@kroen3n:/home/hue# 
 ```
+
+From /proc filesystem documentation, following section is in your interest (for now) 
+```
+ /proc/[pid]/status 
+ [...]
+        * CapInh, CapPrm, CapEff: Masks (expressed in hexadecimal) of
+                capabilities enabled in inheritable, permitted, and effec‐
+                tive sets (see capabilities(7)).
+		
+		[ ... some bounding and ambient caps following ... ]
+		
+ [...]
+````
+The inheritable, permitted and effective sets are explained in the link code, as well.
+
+<i> Time to practice </i>
+
+Let's grab a random Linux process (in my case 1824), and see what capabilities it has:
+
+```
+root@kroen3n:/home/hue# more /proc/1824/status | grep -i cap
+CapInh:	00000000a80c25fb
+CapPrm:	00000000a80c25fb
+CapEff:	00000000a80c25fb
+CapBnd:	00000000a80c25fb
+CapAmb:	0000000000000000
+```
+
+Remember, there is a tool we haven't used it (althoug, documentation link was provided) ... capsh. 
+Let's locate it:
+```
+root@kroen3n:/home/hue# whereis capsh
+capsh: /sbin/capsh
+```
+Let's use it to decode the capabilities:
+
+```
+root@kroen3n:/home/hue# /sbin/capsh --decode=00000000a80c25fb
+0x00000000a80c25fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,
+cap_net_raw,cap_sys_chroot,cap_sys_ptrace,cap_mknod,cap_audit_write,cap_setfcap
+
+```
+Beautiful, eh?
+
+[... in progress...]
+
+
 
 
 
