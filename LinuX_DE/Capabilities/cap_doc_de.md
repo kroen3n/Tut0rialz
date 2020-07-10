@@ -28,3 +28,11 @@ Zitat aus: http://manpages.ubuntu.com/manpages/bionic/de/man7/capabilities.7.htm
 <i> https://man7.org/linux/man-pages/man8/getcap.8.html </i>
 
 <i> https://man7.org/linux/man-pages/man1/capsh.1.html </i> 
+
+
+<br></br>
+
+<b> Das erste Beispiel - Linux-Host   </b> 
+
+Der Linux-Kernel implementiert eine Vielzahl von Fähigkeiten; <br>
+Das folgende Beispiel gibt einen kleinen Überblick darüber, warum und wie man die Macht der Fähigkeiten nutzt. </br>
