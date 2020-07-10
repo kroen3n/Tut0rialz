@@ -173,7 +173,7 @@ Welche Optionen habe ich? - lassen Sie uns über "Fähigkeiten" nachdenken. In d
       CAP_CHOWN
               beliebige Änderungen an Datei-UIDs und GIDs vornehmen (siehe chown(2))
 ```	    
-``` 
+
 "chown" suchen:
 
 ```
