@@ -77,6 +77,91 @@ hue@kroen3n:~$ ls -ltr hiya*
 ```
 Man wird versuchen, in diese Datei zu schreiben; Ich werde ein Golang-Programm ausführen, <a href="https://raw.githubusercontent.com/kroen3n/Tut0rialz/master/LinuX/Capabilities/write_into_file.go"> write_into_file.go</a>, um ein paar Zeilen hinzuzufügen und anzuhängen.
 
+```
+package main
 
+import (
+  "os"
+	"io/ioutil"
+	"log"
+)
+
+func main(){
+	err := ioutil.WriteFile(os.Args[1], []byte("hiya\n"), 0644)
+
+	if err != nil{
+		log.Fatal(err)
+	}
+
+	file, err := os.OpenFile(os.Args[1], os.O_APPEND|os.O_WRONLY, 0644)
+
+	if err != nil{
+		log.Println(err)
+	}
+
+	defer file.Close()
+
+	if _, err := file.WriteString("hiya again\n"); err != nil{
+		log.Fatal(err)
+	}
+
+}
+```
+
+Das Programm mit einem Argument ausführen:
+
+```
+hue@kroen3n:~$ go run write_into_file.go hiya.txt 
+2020/07/09 13:24:15 open hiya.txt: permission denied
+exit status 1
+```
+Hmm... Keine Berechtigung...
+
+Es ist an der Zeit, dass ich etwas anderes versuche.   Ich werde versuchen, die Datei umzubenennen ...
+Man könnte den Befehl "mv" verwenden, aber sollte man das jetzt tun? Lassen Sie uns mehr Golang üben, mit dem Programm rename_me.go:
+
+```
+package main
+
+import (
+	"log"
+	"os"
+)
+
+func main(){
+	actualFile:= os.Args[1]
+	newFile := os.Args[2]
+
+	err := os.Rename(actualFile, newFile)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
+
+
+
+
+```
+package main
+
+import (
+	"log"
+	"os"
+)
+
+func main(){
+	actualFile:= os.Args[1]
+	newFile := os.Args[2]
+
+	err := os.Rename(actualFile, newFile)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
   
    
