@@ -240,7 +240,7 @@ hue@kroen3n:~$ ls -ltr hiya.py
 -rw-r--r-- 1 hue hue 0 Jul  9 14:41 hielau.txt
 ```
 
-Lassen Sie uns etwas in unsere Datei schreiben:
+Jetzt werde ich versuchen, etwas in meine Datei zu schreiben: 
 
 ```
 hue@kroen3n:~$ go run write_into_file.go hielau.txt 
