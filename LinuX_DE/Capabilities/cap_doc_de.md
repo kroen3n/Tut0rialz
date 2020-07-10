@@ -173,5 +173,83 @@ Welche Optionen habe ich? - lassen Sie uns über "Fähigkeiten" nachdenken. In d
       CAP_CHOWN
               beliebige Änderungen an Datei-UIDs und GIDs vornehmen (siehe chown(2))
 ```	    
+``` 
+"chown" suchen:
+
+```
+hue@kroen3n:~$ whereis chown
+chown: /bin/chown
+hue@kroen3n:~$
+```
+
+Kopieren Sie /bin/chown in das Heimatverzeichnis des Benutzers "hue", /home/hue:
+
+```
+hue@kroen3n:~$ cp /bin/chown .
+hue@kroen3n:~$ ls -ltr /home/hue/chown
+-rwxr-xr-x 1 hue  hue  72512 Jul  9 14:20 chown
+```
+
+Schauen wir nach, wo sich die Tools getcap und setcap befinden. 
+
+```
+hue@kroen3n:~$ whereis getcap
+getcap: /sbin/getcap
+hue@kroen3n:~$ 
+hue@kroen3n:~$ whereis setcap
+setcap: /sbin/setcap
+hue@kroen3n:~$ 
+```
+
+```
+hue@kroen3n:~$  
+hue@kroen3n:~$  /sbin/getcap /home/hue/chown
+hue@kroen3n:~$ 
+```
+
+Wie erwartet, keine Ausgabe ...
+
+CAP_CHOWN mit setcap aktivieren:
+
+```
+hue@kroen3n:~$  /sbin/setcap cap_chown+ep chown 
+unable to set CAP_SETFCAP effective capability: Operation not permitted
+hue@kroen3n:~$ 
+```
+
+<i> Man sollte sudo verwenden oder root werden, um diesen Fehler zu überspringen. </i>
+
+
+
+```
+hue@kroen3n:~$  sudo /sbin/setcap cap_chown+ep chown 
+hue@kroen3n:~$  
+hue@kroen3n:~$ pwd
+/home/hue
+hue@kroen3n:~$
+hue@kroen3n:~$ /sbin/getcap ./chown
+chown = cap_chown+ep
+```
+Ausführen von Kommando:
+
+```
+hue@kroen3n:~$ 
+hue@kroen3n:~$ ./chown hue:hue hielau.txt
+hue@kroen3n:~$
+hue@kroen3n:~$ ls -ltr hiya.py 
+-rw-r--r-- 1 hue hue 0 Jul  9 14:41 hielau.txt
+```
+
+Lassen Sie uns etwas in unsere Datei schreiben:
+
+```
+hue@kroen3n:~$ go run write_into_file.go hielau.txt 
+hue@kroen3n:~$ more hielau.txt 
+hiya
+hiya again
+hue@kroen3n:~$
+```
+
+
 
 
