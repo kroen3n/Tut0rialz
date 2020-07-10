@@ -45,7 +45,7 @@ root@kroen3n:/home/hue# mkdir -p /home/hue
 root@kroen3n:/home/hue# chown -R hue:hue /home/hue
 ```
 
-Prüfen durchführen
+Durchführung der Prüfung
 
 ```
 root@kroen3n:/home/hue# cat /etc/passwd | grep hue
@@ -75,7 +75,7 @@ $ bash
 hue@kroen3n:~$ ls -ltr hiya*
 -rw-r--r-- 1 root root    0 Jul  9 13:18 hiya.txt
 ```
-Man wird versuchen, in diese Datei zu schreiben; Ich werde ein Golang-Programm ausführen, <a href="https://raw.githubusercontent.com/kroen3n/Tut0rialz/master/LinuX/Capabilities/write_into_file.go"> write_into_file.go</a>, um ein paar Zeilen hinzuzufügen und anzuhängen.
+Man wird versuchen, in diese Datei zu schreiben; Ich werde ein Golang-Programm ausführen,  um ein paar Zeilen hinzuzufügen und anzuhängen.
 
 ```
 package main
@@ -230,7 +230,7 @@ hue@kroen3n:~$
 hue@kroen3n:~$ /sbin/getcap ./chown
 chown = cap_chown+ep
 ```
-Ausführen von Kommando:
+Ausführung von Kommando:
 
 ```
 hue@kroen3n:~$ 
