@@ -36,3 +36,47 @@ Zitat aus: http://manpages.ubuntu.com/manpages/bionic/de/man7/capabilities.7.htm
 
 Der Linux-Kernel implementiert eine Vielzahl von Fähigkeiten; <br>
 Das folgende Beispiel gibt einen kleinen Überblick darüber, warum und wie man die Macht der Fähigkeiten nutzt. </br>
+
+
+ Benutzer "hue" und Gruppe "hue" erstellen 
+```
+root@kroen3n:/home/hue# useradd hue
+root@kroen3n:/home/hue# mkdir -p /home/hue
+root@kroen3n:/home/hue# chown -R hue:hue /home/hue
+```
+
+Prüfen durchführen
+
+```
+root@kroen3n:/home/hue# cat /etc/passwd | grep hue
+hue:x:1000:1000::/home/hue:/bin/sh
+root@kroen3n:/home/hue# 
+root@kroen3n:/home/hue# su - hue
+$ bash
+hue@kroen3n:~$ pwd
+/home/hue
+```
+
+Eine leere Datei als Root-Benutzer erstellen.
+Speicherort bleibt unter dem Homeverzeichnis des hue-Benutzers.
+
+```
+root@kroen3n:/home/hue# touch hiya.txt
+root@kroen3n:/home/hue#
+root@kroen3n:/home/hue# ls -ltr hiya*
+-rw-r--r-- 1 root root    0 Jul  9 13:18 hiya.txt
+```
+
+ "hue"-Benutzer zu werden, und Operationen auf die Datei anwenden 
+ 
+ ```
+ root@kroen3n:/home/hue# su - hue
+$ bash
+hue@kroen3n:~$ ls -ltr hiya*
+-rw-r--r-- 1 root root    0 Jul  9 13:18 hiya.txt
+```
+Man wird versuchen, in diese Datei zu schreiben; Ich werde ein Golang-Programm ausführen, <a href="https://raw.githubusercontent.com/kroen3n/Tut0rialz/master/LinuX/Capabilities/write_into_file.go"> write_into_file.go</a>, um ein paar Zeilen hinzuzufügen und anzuhängen.
+
+
+  
+   
