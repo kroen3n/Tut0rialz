@@ -140,28 +140,38 @@ func main(){
 }
 ```
 
-
-
-
+Man soll zwei Argumente für dieses Programm angeben - den Namen der eigentlichen Datei und den Namen, den man wählt:
 
 ```
-package main
-
-import (
-	"log"
-	"os"
-)
-
-func main(){
-	actualFile:= os.Args[1]
-	newFile := os.Args[2]
-
-	err := os.Rename(actualFile, newFile)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-}
+hue@kroen3n:~$  go run rename_me.go hiya.txt hielau.txt
+hue@kroen3n:~$  
+hue@kroen3n:~$  ls -ltr hielau.*
+-rw-r--r-- 1 root root 0 Jul  9 13:31 hielau.txt
+hue@kroen3n:~$  
+hue@kroen3n:~$ 
 ```
-  
-   
+
+Das hat funktioniert...
+
+Und zurück zu meiner (jetzt umbenannten) Datei:
+
+```
+hue@kroen3n:~$  ls -ltr hielau.*
+-rw-r--r-- 1 root root 0 Jul  9 13:31 hielau.txt
+```
+Wie man gut erkennen kann, versuche ich, in eine Datei zu schreiben, die dem Benutzer root gehört, während ich ein Nicht-Root-Benutzer bin:
+
+```
+hue@kroen3n:~$  id
+uid=1000(hue) gid=1000(hue) groups=1000(hue)
+```
+
+Dies scheinen Eigentumsfragen zu sein.
+Welche Optionen habe ich? - lassen Sie uns über "Fähigkeiten" nachdenken. In der Dokumentation wird erwähnt:
+
+```
+      CAP_CHOWN
+              beliebige Änderungen an Datei-UIDs und GIDs vornehmen (siehe chown(2))
+```	    
+
+
