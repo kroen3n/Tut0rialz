@@ -17,3 +17,6 @@ https://man7.org/linux/man-pages/man5/proc.5.html
 
 [Golang tutorial]
 https://tour.golang.org/welcome/1
+
+[Golang Official OS package doc]
+https://golang.org/pkg/os/
