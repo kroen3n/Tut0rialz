@@ -257,7 +257,7 @@ And let's apply this newly changed chown on our file:
 hue@kroen3n:~$ 
 hue@kroen3n:~$ ./chown hue:hue hielau.txt
 hue@kroen3n:~$
-hue@kroen3n:~$ ls -ltr hiya.py 
+hue@kroen3n:~$ ls -ltr hielau.txt
 -rw-r--r-- 1 hue hue 0 Jul  9 14:41 hielau.txt
 ```
 You can see that now the file is owned by non-root user, hue.
