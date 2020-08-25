@@ -442,7 +442,7 @@ COMMAND   PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
 tcp_ln   27373 root    3u  IPv6 3394583      0t0  TCP *:80 (LISTEN)
 root@kroen3n:/home/hue#
 ```
-From same new terminal, let's create a connection with our Listener on port 3456 (this runs locally, of course!)
+From same new terminal, let's create a connection with our Listener on port 80  (this runs locally, of course!)
 ```
  root@kroen3n:/home/hue# nc localhost 80
 'twas a success!Bye!
