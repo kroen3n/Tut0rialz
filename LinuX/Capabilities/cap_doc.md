@@ -434,7 +434,7 @@ root@kroen3n:/home/hue#
 root@kroen3n:/home/hue# ./tcp_ln
 Listening...
 ```
-Open another terminal, and see if something runs on port 3456:
+Open another terminal, and see if something runs on port 80:
 
 ```
 root@kroen3n:/home/hue# lsof -i :80
