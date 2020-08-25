@@ -386,8 +386,9 @@ import (
 func main() {
 
     // create server
-    service := ":80"
-    listener, err := net.Listen("tcp", service)
+    // Documentation: https://golang.org/pkg/net/
+    portService := ":80"
+    listener, err := net.Listen("tcp", portService)
 
     if err != nil {
                 fmt.Fprintln(os.Stdout, err)
@@ -408,9 +409,8 @@ func main() {
         }
 	
         // Handle connections 
-	// Documentation: https://golang.org/pkg/net/
-	
         go handleConnection(conn)
+	
     }
 }
 
