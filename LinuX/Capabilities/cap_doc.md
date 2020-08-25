@@ -294,9 +294,8 @@ hue@kroen3n:~$
 You want more, eh?
 
 Take a look at ...
-<br>
+<br></br>
 ... following code:   https://man7.org/tlpi/code/online/dist/cap/cap_text.c.html  [1]
-
 ... and /proc filesystem documentation:  https://man7.org/linux/man-pages/man5/proc.5.html [2] 
 
 You might want to check the <i> capability.h </i> file, from your linux host:
