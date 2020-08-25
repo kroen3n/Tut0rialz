@@ -45,7 +45,7 @@ func main() {
 // function to handle incoming requests 
 func handleConnection(handleconn net.Conn) {
 
-  defer handleconn.Close()
+  //defer handleconn.Close()
 
   handleconn.Write([]byte("'twas a success!Bye!\n"))
 
