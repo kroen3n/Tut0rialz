@@ -169,7 +169,7 @@ uid=1000(hue) gid=1000(hue) groups=1000(hue)
 
 What options do I have - from a "capability" point of view? 
 
-Since this is an ownage related challenge, my documentation mentions following:
+Since this is an ownership related challenge, my documentation mentions following:
 
 ```
        CAP_CHOWN
@@ -365,6 +365,152 @@ cap_net_raw,cap_sys_chroot,cap_sys_ptrace,cap_mknod,cap_audit_write,cap_setfcap
 
 ```
 Beautiful, eh?
+
+<br></br>
+
+Now, let's practice with a bit of Golang code. 
+
+Suppose you want to test a small golang TCP Listener, <a href="https://github.com/kroen3n/Tut0rialz/blob/master/LinuX/Capabilities/tcp_ln.go">tcp_ln.go</a>
+
+```
+root@kroen3n:/home/hue# more tcp_ln.go
+package main
+
+import (
+    "fmt"
+    "net"
+    "os"
+)
+
+
+func main() {
+
+    // create server
+    service := ":80"
+    listener, err := net.Listen("tcp", service)
+
+    if err != nil {
+                fmt.Fprintln(os.Stdout, err)
+                os.Exit(2)
+    }
+    
+
+    fmt.Println("Listening...")
+
+    for {
+        // Listening for incoming connection.
+	//
+        conn, err := listener.Accept()
+
+        if err != nil {
+	    fmt.Fprintf(os.Stderr, "Error: %s", err.Error())
+            os.Exit(1)
+        }
+	
+        // Handle connections 
+	// Documentation: https://golang.org/pkg/net/
+	
+        go handleConnection(conn)
+    }
+}
+
+// function to handle incoming requests 
+func handleConnection(handleconn net.Conn) {
+
+  defer handleconn.Close()
+
+  handleconn.Write([]byte("'twas a success!Bye!\n"))
+
+  handleconn.Close()
+
+}
+
+```
+Just to test it, as root, build it, and run it:
+
+```
+root@kroen3n:/home/hue# go build -o tcp_ln tcp_ln.go
+root@kroen3n:/home/hue#
+root@kroen3n:/home/hue# ./tcp_ln
+Listening...
+```
+Open another terminal, and see if something runs on port 3456:
+
+```
+root@kroen3n:/home/hue# lsof -i :80
+COMMAND   PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME
+tcp_ln   27373 root    3u  IPv6 3394583      0t0  TCP *:80 (LISTEN)
+root@kroen3n:/home/hue#
+```
+From same new terminal, let's create a connection with our Listener on port 3456 (this runs locally, of course!)
+```
+ root@kroen3n:/home/hue# nc localhost 80
+'twas a success!Bye!
+```
+
+Let's become again "hue" user, and try to run the program:
+
+```
+ root@kroen3n:/home/hue#  su - hue
+ hue@kroen3n:/home/hue$ ./tcp_ln
+ listen tcp :80 : bind: permission denied 
+```
+Let's change the ownership, and run it again:
+
+```
+hue@kroen3n:/home/hue$  sudo chown hue:hue ./tcp_ln
+hue@kroen3n:/home/hue$  ls -ltr tcp_ln
+-rwxr-xr-x 1 hue hue 2945376 aug 25 16:38 tcp_ln
+hue@kroen3n:/home/hue$  ./tcp_ln
+listen tcp :80: bind: permission denied
+```
+Same error. Time to recheck the documentation for Linux capabilities. 
+You will notice there are a few for networking:
+
+```
+ CAP_NET_ADMIN
+              Perform various network-related operations:
+              * interface configuration;
+              * administration of IP firewall, masquerading, and accounting;
+              * modify routing tables;
+              * bind to any address for transparent proxying;
+              * set type-of-service (TOS);
+              * clear driver statistics;
+              * set promiscuous mode;
+              * enabling multicasting;
+              * use setsockopt(2) to set the following socket options:
+                SO_DEBUG, SO_MARK, SO_PRIORITY (for a priority outside the
+                range 0 to 6), SO_RCVBUFFORCE, and SO_SNDBUFFORCE.
+
+       CAP_NET_BIND_SERVICE
+              Bind a socket to Internet domain privileged ports (port
+              numbers less than 1024).
+
+       CAP_NET_BROADCAST
+              (Unused)  Make socket broadcasts, and listen to multicasts.
+
+       CAP_NET_RAW
+              * Use RAW and PACKET sockets;
+              * bind to any address for transparent proxying.
+```
+
+Since we are dealing with a "binding" error, and our port is less than 1024, we should try the CAP_NET_BIND_SERVICE 
+
+Apply capability:
+```
+ hue@kroen3n:/home/hue$ sudo /sbin/setcap cap_net_bind_service=+ep tcp_ln
+ hue@kroen3n:/home/hue$
+ hue@kroen3n:/home/hue$ /sbin/getcap tcp_ln
+ tcp_ln = cap_net_bind_service+ep
+
+ ```
+ And run again as non-root user:
+ 
+ ```
+ hue@kroen3n:/home/hue$ ./tcp_ln
+Listening...
+```
+Nice! It works! 
 
 [... in progress...]
 
