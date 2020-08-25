@@ -36,7 +36,7 @@ func main() {
         }
 	
         // Handle connections 
-	      // Documentation: https://golang.org/pkg/net/
+	// Documentation: https://golang.org/pkg/net/
 	
         go handleConnection(conn)
     }
