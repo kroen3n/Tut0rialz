@@ -13,8 +13,8 @@ import (
 func main() {
 
     // create server
-    service := ":80"
-    listener, err := net.Listen("tcp", service)
+    portService := ":80"
+    listener, err := net.Listen("tcp", portService)
 
     if err != nil {
                 fmt.Fprintln(os.Stdout, err)
