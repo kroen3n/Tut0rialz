@@ -365,7 +365,6 @@ cap_net_raw,cap_sys_chroot,cap_sys_ptrace,cap_mknod,cap_audit_write,cap_setfcap
 
 ```
 Beautiful, eh?
-
 <br></br>
 
 Now, let's practice with a bit of Golang code. 
@@ -417,7 +416,7 @@ func main() {
 // function to handle incoming requests 
 func handleConnection(handleconn net.Conn) {
 
-  defer handleconn.Close()
+  // defer handleconn.Close()
 
   handleconn.Write([]byte("'twas a success!Bye!\n"))
 
@@ -507,7 +506,7 @@ Apply capability:
  And run again as non-root user:
  
  ```
- hue@kroen3n:/home/hue$ ./tcp_ln
+hue@kroen3n:/home/hue$ ./tcp_ln
 Listening...
 ```
 Nice! It works! 
